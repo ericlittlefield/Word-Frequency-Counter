@@ -19,6 +19,8 @@ def download_nltk_data():
     nltk.download('punkt', quiet=True)
     nltk.download('punkt_tab', quiet=True)
     nltk.download('averaged_perceptron_tagger_eng', quiet=True)
+    nltk.download('wordnet', quiet=True)
+    nltk.download('omw-1.4', quiet=True)
 
 download_nltk_data()
 
@@ -102,7 +104,22 @@ if uploaded_file is not None:
                     
                     # Identify adjectives (JJ) or adverbs (RB)
                     if tag.startswith(('JJ')):
+                        # --- FIX FOR NOUN ADJUNCTS ---
+                        # Check synsets to see how the word is classified in WordNet
+                        synsets = wordnet.synsets(lower_word)
+                        
+                        # If WordNet knows the word, check if it can even function as an adjective
+                        if synsets:
+                            has_adj_sense = any(s.pos() in ('a', 's') for s in synsets)
+                            has_noun_sense = any(s.pos() == 'n' for s in synsets)
+                            
+                            # If it's a known noun but has NO recorded adjective senses (like "temple"),
+                            # skip adding it to the adjective frequency counter.
+                            if has_noun_sense and not has_adj_sense:
+                                continue  # Treat it as a noun adjunct, not a true adjective
+                        # -----------------------------
                         adjectives.append(lower_word)
+                    
                     if tag.startswith('RB') or tag == 'WRB':
                         adverbs.append(lower_word)
 
