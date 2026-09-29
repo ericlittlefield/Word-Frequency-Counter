@@ -6,6 +6,7 @@ from collections import Counter
 import matplotlib.pyplot as plt
 import seaborn as sns
 from nltk.corpus import stopwords
+from nltk.corpus import wordnet
 
 # 1. App Configuration & Setup
 st.set_page_config(page_title="Word Analyzer", page_icon="🧚", layout="centered")
