@@ -135,7 +135,7 @@ if uploaded_file is not None:
             plot_top_frequencies(
                 word_count_frequency=adverb_frequency,
                 top_n=top_n_slider,
-                title=f"Top {top_n_slider} adjectives in document",
+                title=f"Top {top_n_slider} adverbs in document",
                 palette='viridis'
             )
           
