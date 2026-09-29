@@ -103,7 +103,7 @@ if uploaded_file is not None:
                     # Identify adjectives (JJ) or adverbs (RB)
                     if tag.startswith(('JJ')):
                         adjectives.append(lower_word)
-                    if tag.startswith(('RB')):
+                    if tag.startswith('RB') or tag == 'WRB':
                         adverbs.append(lower_word)
 
             # Count overall frequencies
